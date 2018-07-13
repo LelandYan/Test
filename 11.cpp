@@ -2,12 +2,12 @@
 #include <algorithm>
 using namespace std;
 //最后一题
-int fun(int a, int b,int c)
+long long fun(long long  a, long long b,long long c)
 {
     int s = 1;
     while(b)
     {
-        if(b%2)
+        if(b%2==1)
         {
             s %= c;
             a %= c;
@@ -21,7 +21,7 @@ int fun(int a, int b,int c)
 }
 int main()
 {
-    long int a,b,c,d;
+    long long a,b,c,d;
     cin >> a;
     while(a--)
     {
