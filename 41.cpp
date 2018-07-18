@@ -15,7 +15,7 @@ void dfs(int a)
     }
     for(int i=0;i<3;i++)
     {
-        b[i]+=arr[i];dfs(a+1);b[i]-=arr[i];
+        b[i]+=arr[a];dfs(a+1);b[i]-=arr[a];
     }
 }
 int main()

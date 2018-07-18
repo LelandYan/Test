@@ -17,14 +17,14 @@ void dfs(int num,int len,int st)
         return;
     }
     if(ave==len)dfs(num+1,0,0);
-    else for(int i=st;i<=n;i++)
-        if(!v[i])
-    {
-        v[i]=1;
-        dfs(num,len+a[i],i+1);
-        v[i]=0;
-        if(flag)return;
-    }
+    else for(int i=st; i<=n; i++)
+            if(!v[i])
+            {
+                v[i]=1;
+                dfs(num,len+a[i],i+1);
+                v[i]=0;
+                if(flag)return;
+            }
 }
 int main()
 {
@@ -34,7 +34,7 @@ int main()
     {
         int s=0;
         cin>>n;
-        for(int i=1;i<=n;i++)
+        for(int i=1; i<=n; i++)
             cin>>a[i],s+=a[i];
         if(s%4!=0)cout<<"no\n";
         else

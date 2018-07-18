@@ -12,11 +12,11 @@ void prime()
     isprime[0]=isprime[1]=0;//0和1不是素数
     for(long long i=2;i<=40;i++)
     {
-        /*if(isprime[i])//保存素数
+        if(isprime[i])//保存素数
         {
             su[cnt++]=i;
-        }*/
-        for(long long j=i*i;j<=40;j+=i)//素数的倍数都为合数
+        }
+        for(long long j=i*2;j<=40;j+=i)//素数的倍数都为合数
         {
             isprime[j]=0;
         }
@@ -25,7 +25,7 @@ void prime()
 int main()
 {
     prime();
-    for(long long i=0;i<40;i++)
+    for(long long i=1;i<cnt;i++)
         printf("%d  ",isprime[i]);
     return 0;
 }
