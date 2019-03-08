@@ -1,1 +1,1 @@
-# test
+## the note of learning c and c++
