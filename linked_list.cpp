@@ -14,6 +14,8 @@ int ListInsert(Linklist & L,int i,ElemType e);
 int ListDelete(Linklist &L,int i);
 void CreateList_H(Linklist & L,int n);
 void CreateList_R(Linklist & L,int n);
+LNode * listMerge(LNode *head1,LNode *head2);
+void linked_list_display(Linklist L);
 int InitList(Linklist & L) {
     L = new LNode;
     L->next = NULL;
@@ -66,7 +68,7 @@ int ListDelete(Linklist &L,int i) {
     return OK;
 }
 void CreateList_H(Linklist & L,int n) {
-    // ÄæĞòÊäÈë£î¸öÔªËØµÄÖµ£¬½¨Á¢´øÍ·½ÚµãµÄµ¥ÁĞ±í£Ì
+    // é€†åºè¾“å…¥ï½ä¸ªå…ƒç´ çš„å€¼ï¼Œå»ºç«‹å¸¦å¤´èŠ‚ç‚¹çš„å•åˆ—è¡¨ï¼¬
     L = new LNode;
     L->next = NULL;
     for(int i =0; i<n ; i++) {
@@ -88,14 +90,79 @@ void CreateList_R(Linklist & L,int n) {
         r = p;
     }
 }
+LNode * listMerge(LNode *head1,LNode *head2)
+{
+    if(head1 == NULL)return head2;
+    if(head2 == NULL)return head1;
+    LNode *head = NULL;
+    LNode *p1 = head1;
+    LNode *p2 = head2;
+    if(p1->data < p2->data)
+    {
+        head = p1;
+        p1 = p1->next;
+    }
+    else
+    {
+        head = p2;
+        p2 = p2->next;
+    }
+    LNode *p = head;
+    while(p1 && p2)
+    {
+        if(p1->data < p2->data)
+        {
+            p->next = p1;
+            p1 = p1->next;
+        }
+        else
+        {
+            p->next=  p2;
+            p2 = p2->next;
+        }
+        p = p->next;
+    }
+    if(p1)
+    {
+        p->next = p1;
+    }
+    else if(p2)
+    {
+        p->next = p2;
+    }
+    return head;
+}
+void linked_list_display(Linklist L)
+{
+    int cnt = 0;
+    while(L){
+        if(cnt != 0)cout << "->";
+        cout << L->data;
+        L = L->next;
+        cnt ++;
+    }
+    cout <<endl;
+}
 int main() {
-    Linklist p;
-    InitList(p);
-    ListInsert(p,1,12);
-    int e=0;
-    GetElem(p,1,e);
-    cout << e << endl;
-    cout <<LocateElem(p,12)->data;
-    cout << ListDelete(p,1) << endl;
+    Linklist p1;
+    Linklist p2;
+    CreateList_R(p1,4);
+    CreateList_R(p2,4);
+    //InitList(p);
+    //ListInsert(p,1,12);
+    //ListInsert(p,2,13);
+    p1 = p1->next;
+    p2 = p2->next;
+    linked_list_display(p1);
+    linked_list_display(p2);
+    p1 = p1->next;
+    p2 = p2->next;
+    Linklist p = listMerge(p1,p2);
+    linked_list_display(p);
+    //int e=0;
+    //GetElem(p,2,e);
+    //cout << e << endl;
+    //cout <<LocateElem(p,12)->data;
+    //cout << ListDelete(p,1) << endl;
     return 0;
 }
