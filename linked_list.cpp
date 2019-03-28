@@ -16,6 +16,7 @@ void CreateList_H(Linklist & L,int n);
 void CreateList_R(Linklist & L,int n);
 LNode * listMerge(LNode *head1,LNode *head2);
 void linked_list_display(Linklist L);
+LNode * listMerge1(LNode *head1,LNode *head2);
 int InitList(Linklist & L) {
     L = new LNode;
     L->next = NULL;
@@ -88,6 +89,22 @@ void CreateList_R(Linklist & L,int n) {
         p->next=NULL;
         r->next = p;
         r = p;
+    }
+}
+LNode * listMerge1(LNode *head1,LNode *head2)
+{
+    if(head1 == NULL)return head2;
+    if(head2 == NULL)return head1;
+    LNode *head = NULL;
+    if(head1->data <head2->data)
+    {
+        head = head1;
+        head->next = listMerge1(head1->next,head2);
+    }
+    else
+    {
+        head = head2;
+        head->next = listMerge1(head1,head2->next);
     }
 }
 LNode * listMerge(LNode *head1,LNode *head2)
