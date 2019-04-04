@@ -69,7 +69,7 @@ int ListDelete(Linklist &L,int i) {
     return OK;
 }
 void CreateList_H(Linklist & L,int n) {
-    // ÄæÐòÊäÈë£î¸öÔªËØµÄÖµ£¬½¨Á¢´øÍ·½ÚµãµÄµ¥ÁÐ±í£Ì
+    // é€†åºè¾“å…¥ï½Žä¸ªå…ƒç´ çš„å€¼ï¼Œå»ºç«‹å¸¦å¤´èŠ‚ç‚¹çš„å•åˆ—è¡¨ï¼¬
     L = new LNode;
     L->next = NULL;
     for(int i =0; i<n ; i++) {
