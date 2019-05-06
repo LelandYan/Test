@@ -59,6 +59,17 @@ int ClearStack(SqStack &S)
 }
 int main()
 {
-
+    cout << "1710121108-闫相佩\n";
+    SqStack s;
+    InitStack(s);
+    cout << "对线性栈进行初始化\n";
+    int n = 0;
+    cout << "请输入一个数字\n";
+    cin >> n;
+    if(Push(s,n)) cout << "入栈成功\n";
+    else cout << "入栈失败\n";
+    cout << "其栈顶元素为： "<<GetTop(s) << endl;
+    if(Pop(s,n)) cout << "出栈成功\n";
+    else cout << "出栈失败\n";
     return 0;
 }

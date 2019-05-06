@@ -165,21 +165,17 @@ int main() {
     Linklist p2;
     CreateList_R(p1,4);
     CreateList_R(p2,4);
-    //InitList(p);
-    //ListInsert(p,1,12);
-    //ListInsert(p,2,13);
     p1 = p1->next;
     p2 = p2->next;
+    cout << "单链表1为： ";
     linked_list_display(p1);
+    cout << "单链表2为: ";
     linked_list_display(p2);
+
     p1 = p1->next;
     p2 = p2->next;
     Linklist p = listMerge(p1,p2);
+    cout << "\n归并排序后的链表: ";
     linked_list_display(p);
-    //int e=0;
-    //GetElem(p,2,e);
-    //cout << e << endl;
-    //cout <<LocateElem(p,12)->data;
-    //cout << ListDelete(p,1) << endl;
     return 0;
 }
