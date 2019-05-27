@@ -1,13 +1,29 @@
 #include<iostream>
 #include<stack>
 #include<queue>
-#define TElemType int
+#define TElemType char
 using namespace std;
 typedef struct BiTNode
 {
-    TElemType data;///½áµãÊý¾ÝÓò
-    struct BiTNode *lchild,*rchild;///×óÓÒº¢×ÓÖ¸Õë
+    TElemType data;///ç»“ç‚¹æ•°æ®åŸŸ
+    struct BiTNode *lchild,*rchild;///å·¦å³å­©å­æŒ‡é’ˆ
 } BiTNode,*BiTree;
+void CreateBiTree(BiTree &T)
+{
+    char ch;
+    cin >> ch;
+    if(ch=='#')T=NULL;
+    else
+    {
+        ///ç”Ÿæˆæ ¹ç»“ç‚¹
+        T = new BiTNode;
+        ///æ ¹ç»“ç‚¹æ•°æ®åŸŸè®¾ç½®ä¸ºch
+        T->data = ch;
+        CreateBiTree(T->lchild);
+        CreateBiTree(T->rchild);
+
+    }
+}
 void InOrderTraverse(BiTree T)
 {
     if(T)
@@ -15,36 +31,6 @@ void InOrderTraverse(BiTree T)
         InOrderTraverse(T->lchild);
         cout << T->data;
         InOrderTraverse(T->rchild);
-    }
-}
-void InOrderTraverse2(BiTree T)
-{
-    stack<BiTree> s;
-    BiTree p = T;
-    BiTree q = new BiTNode;
-    while(p||!s.empty())
-    {
-        if(p)
-        {
-            s.push(p);
-            p = p->lchild;
-        }
-        else
-        {
-            q = s.top();
-            s.pop();
-            cout << q->data;
-            p = q->rchild;
-        }
-    }
-}
-void PreOrderTraverse(BiTree T)
-{
-    if(T)
-    {
-        cout << T->data;
-        PreOrderTraverse(T->lchild);
-        PreOrderTraverse(T->rchild);
     }
 }
 void PostOrderTraverse(BiTree T)
@@ -68,46 +54,47 @@ void LevelOrderTraverse(BiTree T)
         cout << q->data;
         myq.pop();
         if(q->lchild!=NULL)myq.push(q->lchild);
-        if(q->lchild!=NULL)myq.push(q->lchild);
-
+        if(q->rchild!=NULL)myq.push(q->rchild);
     }
 }
-void CreateBiTree(BiTree &T)
+void PreOrderTraverse(BiTree T)
 {
-    char ch= '#';
-    cin >> ch;
-    if(ch=='#')T=NULL;
-    else
+    if(T)
     {
-        T = new BiTNode;
-        T->data = ch;
-        CreateBiTree(T->lchild);
-        CreateBiTree(T->rchild);
+        cout << T->data;
+        PreOrderTraverse(T->lchild);
+        PreOrderTraverse(T->lchild);
     }
 }
-void Copy(BiTree T,BiTree &NewT)
+void InOrderTraverse2(BiTree T)
 {
-    if(T==NULL)
+    stack<BiTree> s;
+    BiTree p = T;
+    BiTree q = new BiTNode;
+    while(p||!s.empty())
     {
-        NewT = NULL;
-        return;
-    }else
-    {
-        NewT = new BiTNode;
-        NewT->data = T->data;///¸´ÖÆ¸ù½Úµã
-        Copy(T->lchild,NewT->lchild);///µÝ¹é¸´ÖÆ×ó×ÓÊ÷
-        Copy(T->rchild,NewT->rchild);///µÝ¹é¸´ÖÆÓÒ×ÓÊ÷
+        if(p)
+        {
+            s.push(p);
+            p = p->lchild;
+        }
+        else
+        {
+            q = s.top();
+            s.pop();
+            cout << q->data;
+            p=q->rchild;
+        }
     }
 }
 int Depth(BiTree T)
 {
-
-    if(T == NULL)return 0;
+    if(T==NULL)return 0;
     else
     {
         int m = Depth(T->lchild);
         int n = Depth(T->rchild);
-        if(m > n)return m+1;
+        if(m>n)return m+1;
         else return n+1;
     }
 }
@@ -118,6 +105,23 @@ int NodeCount(BiTree T)
 }
 int main()
 {
-
+    cout << "äºŒå‰æ ‘å‰åºåˆ›å»º\n";
+    cout << "è¯·è¾“å…¥åºåˆ—:";
+    BiTree tree = new BiTNode;
+    CreateBiTree(tree);
+    cout << "å‰åºéåŽ†ç»“æžœï¼š";
+    PreOrderTraverse(tree);
+    cout << endl;
+    cout << "ä¸­åºéåŽ†ç»“æžœï¼š";
+    InOrderTraverse(tree);
+    cout << endl;
+    cout << "åŽåºéåŽ†ç»“æžœï¼š";
+    PostOrderTraverse(tree);
+    cout << endl;
+    cout << "å±‚åºéåŽ†ç»“æžœï¼š";
+    LevelOrderTraverse(tree);
+    cout << endl;
+    cout << "äºŒå‰æ ‘çš„æ·±åº¦ä¸ºï¼š";
+    cout <<Depth(tree);
     return 0;
 }
