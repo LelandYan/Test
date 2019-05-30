@@ -21,10 +21,10 @@ typedef struct
 typedef struct ArcNode
 {
     int adjvex; ///该边所指向的顶点的位置
-    struct ArcNode * nextarc;
-    OtherInfo info;
+    struct ArcNode * nextarc;///指向下一条边的指针
+    OtherInfo info;///和边相关的信息
 }ArcNode;
-typedef struct VNode
+typedef struct VNode ///顶点信息
 {
     VerTexType data;
     ArcNode * firstarc;
@@ -34,6 +34,43 @@ typedef struct
     AdjList vertices;
     int vexnum,arcnum;
 }ALGraph;
+bool visited[MVNum];
+int LocateVex(AMGraph G,VerTexType v1)
+{
+    for(int i = 0; i < G.arcnum; i++)
+    {
+        if(G.vexs[i] == v1)return i;
+    }
+    return ERROR;
+}
+Status CreateUDG(ALGraph &G)
+{
+    cin >> G.vexnum >> G.arcnum;
+    for(int i = 0; i < G.vexnum;i++)
+    {
+        cin >> G.vertices[i].data;
+        G.vertices[i].firstarc = NULL;
+    }
+    int i,j,v1,v2;
+    for(int k = 0; k <G.arcnum;k++)
+    {
+        cin >> v1 >> v2;
+        i = LocateVex(G,v1);
+        j = LocateVex(G,v2);
+
+        ArcNode p1 = new ArcNode;
+        p1->adjvex = j;
+        p1->nextarc = G.vertices[i].firstarc;
+        G.vertices[i] = p1;
+
+        ArcNode p2 = new ArcNode;
+        p2->adjvex = i;
+        p2->nextarc = G.vertices[j];
+        G.vertices[j].firstarc = p2;
+    }
+    return OK;
+}
+
 Status CreateUDN(AMGraph &G)
 {   ///采用邻接矩阵表示法，创建无向图G
     cin >> G.vexnum>>G.arcnum; /// 输入总顶点数，总边数
@@ -42,7 +79,7 @@ Status CreateUDN(AMGraph &G)
     for(int i = 0; i < G.vexnum; i++)
         for(int j = 0; j <G.vexnum;j++)
             G.arcs[i][j] = MaxInt;
-    int w,v1,v2;
+    int w,v1,v2,i,j;
     for(int k = 0; k <G.arcnum; k++)
     {
         cin >> v1 >> v2 >> w;
@@ -54,13 +91,24 @@ Status CreateUDN(AMGraph &G)
     }
     return OK;
 }
-int LocateVex(AMGraph G,VerTexType v1)
+void DFS(Graph G,int v)
 {
-    for(int i = 0; i < G.arcnum; i++)
-    {
-        if(G.vexs[i] == v1)return i;
-    }
-    return ERROR;
+    cout << v;
+    visited[v] = true;
+    for(int w = FirstAdjVex(G,v);w>=0;w=NextAdjVex(G,v,w))if(!visited[w])DFS(G,w);
+}
+void DFSTraverse(Graph G)
+{
+    for(int v = 0; v <G.vexnum;++v)visited[v]=false;
+    for(int v = 0; v <G.vexnum;++v)if(!visited[v])DFS(G,v);
+}
+///采用邻接矩阵dfs
+void DFS_AM(AMGraph G,int v)
+{
+    cout << v;
+    visited[v]= true;
+    for(int w = 0; w < G.vexnum; w++)
+        if((G.arcs[v][w]!=0)&&(!visited[w]))DFS_AM(G,w);
 }
 int main()
 {
