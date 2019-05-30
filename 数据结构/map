@@ -1,0 +1,69 @@
+#include <iostream>
+
+using namespace std;
+#define MaxInts 32767
+#define MVNum 100 ///最大顶点数
+#define Status int
+#define OK 1
+#define ERROR -1
+#define MaxInt 0x7fffffff
+#define OtherInfo int
+typedef char VerTexType;
+typedef int ArcType;
+///邻接矩阵定义
+typedef struct
+{
+    VerTexType vexs[MVNum];
+    ArcType arcs[MVNum][MVNum];
+    int vexnum,arcnum;
+}AMGraph;
+///邻接表定义
+typedef struct ArcNode
+{
+    int adjvex; ///该边所指向的顶点的位置
+    struct ArcNode * nextarc;
+    OtherInfo info;
+}ArcNode;
+typedef struct VNode
+{
+    VerTexType data;
+    ArcNode * firstarc;
+}VNode,AdjList[MVNum];
+typedef struct
+{
+    AdjList vertices;
+    int vexnum,arcnum;
+}ALGraph;
+Status CreateUDN(AMGraph &G)
+{   ///采用邻接矩阵表示法，创建无向图G
+    cin >> G.vexnum>>G.arcnum; /// 输入总顶点数，总边数
+    for(int i = 0; i < G.vexnum;i++)
+        cin >> G.vexs[i];
+    for(int i = 0; i < G.vexnum; i++)
+        for(int j = 0; j <G.vexnum;j++)
+            G.arcs[i][j] = MaxInt;
+    int w,v1,v2;
+    for(int k = 0; k <G.arcnum; k++)
+    {
+        cin >> v1 >> v2 >> w;
+        i = LocateVex(G,v1);
+        j = LocateVex(G,v2);
+        if(i == -1 || j == -1)cout << "边不存在,请重新输入\n";
+        G.arcs[i][j] = w;
+        G.arcs[j][i] = G.arcs[i][j];
+    }
+    return OK;
+}
+int LocateVex(AMGraph G,VerTexType v1)
+{
+    for(int i = 0; i < G.arcnum; i++)
+    {
+        if(G.vexs[i] == v1)return i;
+    }
+    return ERROR;
+}
+int main()
+{
+
+    return 0;
+}
